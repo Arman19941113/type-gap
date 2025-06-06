@@ -1,5 +1,118 @@
-# Vue 3 + TypeScript + Vite
+# 文本格式化工具 PWA
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+这是一个支持PWA的前端项目，专门用于在中文和英文、数字之间自动添加空格，提升文本的可读性。
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## ✨ 功能特性
+
+- 🚀 **自动格式化**：智能识别中文、英文、数字之间的边界，自动添加空格
+- 📋 **一键粘贴**：支持从剪贴板直接粘贴内容
+- 📄 **一键复制**：处理后的结果可以一键复制到剪贴板
+- 🎨 **现代UI**：基于Tailwind CSS v4的美观界面
+- 📱 **PWA支持**：支持离线访问和安装到桌面/手机主屏幕
+- ⚡ **高性能**：基于Vue 3 + Vite的快速响应
+
+## 🛠️ 技术栈
+
+- **前端框架**：Vue 3 + TypeScript
+- **构建工具**：Vite
+- **包管理器**：pnpm
+- **样式框架**：Tailwind CSS v4
+- **PWA支持**：vite-plugin-pwa
+
+## 📦 安装和运行
+
+### 环境要求
+
+- Node.js 16+
+- pnpm
+
+### 开发模式
+
+```bash
+# 安装依赖
+pnpm install
+
+# 启动开发服务器
+pnpm run dev
+```
+
+### 生产构建
+
+```bash
+# 构建项目
+pnpm run build
+
+# 预览构建结果
+pnpm run preview
+```
+
+## 💻 使用说明
+
+1. **输入文本**：在左侧输入框中输入需要处理的文本
+2. **粘贴内容**：点击"粘贴"按钮直接从剪贴板粘贴内容
+3. **查看结果**：右侧会实时显示处理后的结果
+4. **复制结果**：点击"复制"按钮将结果复制到剪贴板
+5. **清空输入**：点击"清空"按钮清除所有输入内容
+
+### 示例
+
+```
+输入：Hello世界123测试
+输出：Hello 世界 123 测试
+```
+
+## 📱 PWA功能
+
+本应用支持PWA（Progressive Web App）功能：
+
+- **离线访问**：缓存核心文件，支持离线使用
+- **应用安装**：可以安装到桌面或手机主屏幕
+- **自动更新**：新版本发布时自动更新
+
+### 安装到设备
+
+1. 在支持PWA的浏览器中打开应用
+2. 点击浏览器提示的"安装"按钮
+3. 或者在浏览器菜单中选择"安装应用"
+
+## 🔧 开发指南
+
+### 项目结构
+
+```
+demo-pwa/
+├── public/              # 静态资源
+├── src/
+│   ├── App.vue         # 主应用组件
+│   ├── main.ts         # 应用入口
+│   └── style.css       # 全局样式
+├── vite.config.ts      # Vite配置
+└── package.json        # 项目配置
+```
+
+### 核心算法
+
+文本处理算法使用正则表达式识别中文、英文、数字之间的边界：
+
+```typescript
+// 中文后跟英文/数字，添加空格
+.replace(/([\u4e00-\u9fa5])([a-zA-Z0-9])/g, '$1 $2')
+// 英文/数字后跟中文，添加空格
+.replace(/([a-zA-Z0-9])([\u4e00-\u9fa5])/g, '$1 $2')
+```
+
+## 🎯 未来改进
+
+- [ ] 支持更多语言的识别和处理
+- [ ] 添加自定义规则配置
+- [ ] 支持批量文件处理
+- [ ] 添加历史记录功能
+- [ ] 支持更多的格式化选项
+
+## 📄 许可证
+
+MIT License
+
+## 🤝 贡献
+
+欢迎提交Issue和Pull Request来改进这个项目！
