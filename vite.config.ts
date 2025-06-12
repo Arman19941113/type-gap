@@ -8,9 +8,8 @@ export default defineConfig({
   plugins: [
     vue(),
     tailwindcss(),
-    // @ts-ignore - temporary fix for plugin version compatibility
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       includeAssets: ['favicon.ico', 'logo.svg'],
       manifest: {
         name: '文本格式化工具 - 智能文字排版助手',

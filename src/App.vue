@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import ReloadPWA from './components/ReloadPWA.vue'
 import Toast from './components/Toast.vue'
 
 const toast = ref<InstanceType<typeof Toast> | null>(null)
@@ -56,6 +57,7 @@ const clearInput = () => {
 </script>
 
 <template>
+  <ReloadPWA />
   <Toast ref="toast" />
   <div class="min-h-screen bg-gray-50 py-8 px-4">
     <div class="max-w-6xl mx-auto">
