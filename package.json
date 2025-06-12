@@ -1,7 +1,7 @@
 {
-  "name": "demo-pwa",
+  "name": "type-gap",
+  "description": "一个能够自动在中文和英文、数字之间添加空格，优化排版的 PWA 工具。",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -1,15 +1,17 @@
-# 文本格式化工具 PWA
+# TypeGap: 文字排版工具
 
-这是一个支持PWA的前端项目，专门用于在中文和英文、数字之间自动添加空格，提升文本的可读性。
+> 一次 Vibe Coding 的尝试，98% 的代码由 AI 生成。
+
+TypeGap 是一个支持 PWA 的前端项目，专门用于在中文和英文、数字之间自动添加空格，提升文本的可读性。
 
 ## ✨ 功能特性
 
 - 🚀 **自动格式化**：智能识别中文、英文、数字之间的边界，自动添加空格
 - 📋 **一键粘贴**：支持从剪贴板直接粘贴内容
 - 📄 **一键复制**：处理后的结果可以一键复制到剪贴板
-- 🎨 **现代UI**：基于Tailwind CSS v4的美观界面
-- 📱 **PWA支持**：支持离线访问和安装到桌面/手机主屏幕
-- ⚡ **高性能**：基于Vue 3 + Vite的快速响应
+- 🎨 **现代 UI**：基于 Tailwind CSS v4 的美观界面
+- 📱 **PWA 支持**：支持离线访问和安装到桌面/手机主屏幕
+- ⚡ **高性能**：基于 Vue 3 + Vite 的快速响应
 
 ## 🛠️ 技术栈
 
@@ -17,7 +19,7 @@
 - **构建工具**：Vite
 - **包管理器**：pnpm
 - **样式框架**：Tailwind CSS v4
-- **PWA支持**：vite-plugin-pwa
+- **PWA 支持**：vite-plugin-pwa
 
 ## 📦 安装和运行
 
@@ -57,13 +59,13 @@ pnpm run preview
 ### 示例
 
 ```
-输入：Hello世界123测试
+输入：Hello 世界 123 测试
 输出：Hello 世界 123 测试
 ```
 
-## 📱 PWA功能
+## 📱 PWA 功能
 
-本应用支持PWA（Progressive Web App）功能：
+本应用支持 PWA（Progressive Web App）功能：
 
 - **离线访问**：缓存核心文件，支持离线使用
 - **应用安装**：可以安装到桌面或手机主屏幕
@@ -71,7 +73,7 @@ pnpm run preview
 
 ### 安装到设备
 
-1. 在支持PWA的浏览器中打开应用
+1. 在支持 PWA 的浏览器中打开应用
 2. 点击浏览器提示的"安装"按钮
 3. 或者在浏览器菜单中选择"安装应用"
 
@@ -81,13 +83,13 @@ pnpm run preview
 
 ```
 demo-pwa/
-├── public/              # 静态资源
+├── public/ # 静态资源
 ├── src/
-│   ├── App.vue         # 主应用组件
-│   ├── main.ts         # 应用入口
-│   └── style.css       # 全局样式
-├── vite.config.ts      # Vite配置
-└── package.json        # 项目配置
+│ ├── App.vue # 主应用组件
+│ ├── main.ts # 应用入口
+│ └── style.css # 全局样式
+├── vite.config.ts # Vite 配置
+└── package.json # 项目配置
 ```
 
 ### 核心算法
@@ -115,4 +117,4 @@ MIT License
 
 ## 🤝 贡献
 
-欢迎提交Issue和Pull Request来改进这个项目！
+欢迎提交 Issue 和 Pull Request 来改进这个项目！

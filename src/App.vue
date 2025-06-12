@@ -64,7 +64,7 @@ const { handleScroll } = useScrollSync(inputTextArea, outputDiv)
     <div class="max-w-6xl mx-auto">
       <!-- 标题 -->
       <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">文本格式化工具</h1>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">TypeGap: 文字排版工具</h1>
         <p class="text-gray-600">自动在中文和英文、数字之间添加空格</p>
       </div>
       
