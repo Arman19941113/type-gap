@@ -54,6 +54,28 @@ const handleCopy = async () => {
 const clearInput = () => {
   inputText.value = ''
 }
+
+const inputTextArea = ref<HTMLTextAreaElement | null>(null)
+const outputDiv = ref<HTMLDivElement | null>(null)
+
+let isSyncingScroll = false
+
+const handleScroll = (event: Event) => {
+  if (isSyncingScroll) {
+    isSyncingScroll = false
+    return
+  }
+
+  isSyncingScroll = true
+
+  const source = event.target as HTMLElement
+  const target = source === inputTextArea.value ? outputDiv.value : inputTextArea.value
+
+  if (target) {
+    target.scrollTop = source.scrollTop
+    target.scrollLeft = source.scrollLeft
+  }
+}
 </script>
 
 <template>
@@ -90,6 +112,8 @@ const clearInput = () => {
           </div>
           
           <textarea
+            ref="inputTextArea"
+            @scroll="handleScroll"
             v-model="inputText"
             placeholder="请输入需要处理的文本，或点击粘贴按钮..."
             class="w-full h-64 p-4 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -114,6 +138,8 @@ const clearInput = () => {
           </div>
           
           <div
+            ref="outputDiv"
+            @scroll="handleScroll"
             class="w-full h-64 p-4 border border-gray-300 rounded-lg bg-gray-50 overflow-y-auto whitespace-pre-wrap"
           >
             <span v-if="processedText" class="text-gray-800">{{ processedText }}</span>
