@@ -1,28 +1,21 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import ReloadPWA from './components/ReloadPWA.vue'
+import TextPanel from './components/TextPanel.vue'
 import Toast from './components/Toast.vue'
+import { useScrollSync } from './composables/useScrollSync'
+import { useTextProcessor } from './composables/useTextProcessor'
 
 const toast = ref<InstanceType<typeof Toast> | null>(null)
 const inputText = ref('')
+const { processedText } = useTextProcessor(inputText)
 
 const triggerToast = (message: string) => {
   toast.value?.show(message)
 }
 
 // 处理文本：在中文和英文以及数字之间添加空格
-const processedText = computed(() => {
-  if (!inputText.value) return ''
-  
-  return inputText.value
-    // 中文后跟英文/数字，添加空格
-    .replace(/([\u4e00-\u9fa5])([a-zA-Z0-9])/g, '$1 $2')
-    // 英文/数字后跟中文，添加空格
-    .replace(/([a-zA-Z0-9])([\u4e00-\u9fa5])/g, '$1 $2')
-    // 清理多余的空格，但保留换行符
-    .replace(/[ \t]+/g, ' ')
-    .trim()
-})
+// 文本处理逻辑已移至 useTextProcessor.ts
 
 // 粘贴功能
 const handlePaste = async () => {
@@ -55,27 +48,13 @@ const clearInput = () => {
   inputText.value = ''
 }
 
-const inputTextArea = ref<HTMLTextAreaElement | null>(null)
-const outputDiv = ref<HTMLDivElement | null>(null)
+const inputPanel = ref<InstanceType<typeof TextPanel> | null>(null)
+const outputPanel = ref<InstanceType<typeof TextPanel> | null>(null)
 
-let isSyncingScroll = false
+const inputTextArea = computed(() => inputPanel.value?.elementRef)
+const outputDiv = computed(() => outputPanel.value?.elementRef)
 
-const handleScroll = (event: Event) => {
-  if (isSyncingScroll) {
-    isSyncingScroll = false
-    return
-  }
-
-  isSyncingScroll = true
-
-  const source = event.target as HTMLElement
-  const target = source === inputTextArea.value ? outputDiv.value : inputTextArea.value
-
-  if (target) {
-    target.scrollTop = source.scrollTop
-    target.scrollLeft = source.scrollLeft
-  }
-}
+const { handleScroll } = useScrollSync(inputTextArea, outputDiv)
 </script>
 
 <template>
@@ -92,64 +71,25 @@ const handleScroll = (event: Event) => {
       <!-- 主要内容区域 -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- 输入区域 -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl font-semibold text-gray-800">输入内容</h2>
-            <div class="flex gap-2">
-              <button
-                @click="handlePaste"
-                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
-              >
-                📋 粘贴
-              </button>
-              <button
-                @click="clearInput"
-                class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm"
-              >
-                🗑️ 清空
-              </button>
-            </div>
-          </div>
-          
-          <textarea
-            ref="inputTextArea"
-            @scroll="handleScroll"
-            v-model="inputText"
-            placeholder="请输入需要处理的文本，或点击粘贴按钮..."
-            class="w-full h-64 p-4 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          ></textarea>
-          
-          <div class="mt-2 text-sm text-gray-500">
-            字符数：{{ inputText.length }}
-          </div>
-        </div>
+        <TextPanel
+          ref="inputPanel"
+          v-model="inputText"
+          title="输入内容"
+          placeholder="请输入需要处理的文本，或点击粘贴按钮..."
+          @paste="handlePaste"
+          @clear="clearInput"
+          @scroll="handleScroll"
+        />
         
         <!-- 输出区域 -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl font-semibold text-gray-800">处理结果</h2>
-            <button
-              @click="handleCopy"
-              :disabled="!processedText"
-              class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-sm disabled:bg-gray-300 disabled:cursor-not-allowed"
-            >
-              📄 复制
-            </button>
-          </div>
-          
-          <div
-            ref="outputDiv"
-            @scroll="handleScroll"
-            class="w-full h-64 p-4 border border-gray-300 rounded-lg bg-gray-50 overflow-y-auto whitespace-pre-wrap"
-          >
-            <span v-if="processedText" class="text-gray-800">{{ processedText }}</span>
-            <span v-else class="text-gray-400">处理结果将显示在这里...</span>
-          </div>
-          
-          <div class="mt-2 text-sm text-gray-500">
-            字符数：{{ processedText.length }}
-          </div>
-        </div>
+        <TextPanel
+          ref="outputPanel"
+          :model-value="processedText"
+          title="处理结果"
+          is-output
+          @copy="handleCopy"
+          @scroll="handleScroll"
+        />
       </div>
       
       <!-- 使用说明 -->
