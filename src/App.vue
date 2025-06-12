@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import Toast from './components/Toast.vue'
 
+const toast = ref<InstanceType<typeof Toast> | null>(null)
 const inputText = ref('')
-const showMessage = ref('')
+
+const triggerToast = (message: string) => {
+  toast.value?.show(message)
+}
 
 // 处理文本：在中文和英文以及数字之间添加空格
 const processedText = computed(() => {
@@ -23,39 +28,24 @@ const handlePaste = async () => {
   try {
     const text = await navigator.clipboard.readText()
     inputText.value = text
-    showMessage.value = '已粘贴内容'
-    setTimeout(() => {
-      showMessage.value = ''
-    }, 2000)
+    triggerToast('已粘贴内容')
   } catch (err) {
-    showMessage.value = '粘贴失败，请手动输入'
-    setTimeout(() => {
-      showMessage.value = ''
-    }, 2000)
+    triggerToast('粘贴失败，请手动输入')
   }
 }
 
 // 复制功能
 const handleCopy = async () => {
   if (!processedText.value) {
-    showMessage.value = '没有可复制的内容'
-    setTimeout(() => {
-      showMessage.value = ''
-    }, 2000)
+    triggerToast('没有可复制的内容')
     return
   }
   
   try {
     await navigator.clipboard.writeText(processedText.value)
-    showMessage.value = '已复制到剪贴板'
-    setTimeout(() => {
-      showMessage.value = ''
-    }, 2000)
+    triggerToast('已复制到剪贴板')
   } catch (err) {
-    showMessage.value = '复制失败'
-    setTimeout(() => {
-      showMessage.value = ''
-    }, 2000)
+    triggerToast('复制失败')
   }
 }
 
@@ -66,19 +56,13 @@ const clearInput = () => {
 </script>
 
 <template>
+  <Toast ref="toast" />
   <div class="min-h-screen bg-gray-50 py-8 px-4">
     <div class="max-w-6xl mx-auto">
       <!-- 标题 -->
       <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-gray-800 mb-2">文本格式化工具</h1>
         <p class="text-gray-600">自动在中文和英文、数字之间添加空格</p>
-      </div>
-      
-      <!-- 消息提示 -->
-      <div v-if="showMessage" class="mb-4 text-center">
-        <div class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-lg">
-          {{ showMessage }}
-        </div>
       </div>
       
       <!-- 主要内容区域 -->
