@@ -11,11 +11,11 @@ export default defineConfig({
     // @ts-ignore - temporary fix for plugin version compatibility
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'vite.svg'],
+      includeAssets: ['favicon.ico', 'logo.svg'],
       manifest: {
-        name: '文本格式化工具',
-        short_name: '格式化工具',
-        description: '自动在中文和英文、数字之间添加空格的文本格式化工具',
+        name: '文本格式化工具 - 智能文字排版助手',
+        short_name: '文字排版助手',
+        description: '一款在线文本格式化工具，自动在中文、英文和数字之间添加空格，提升文本可读性。支持一键复制粘贴，是您的智能文字排版助手。',
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
@@ -23,12 +23,12 @@ export default defineConfig({
         start_url: '/',
         icons: [
           {
-            src: 'vite.svg',
+            src: 'logo.svg',
             sizes: '192x192',
             type: 'image/svg+xml'
           },
           {
-            src: 'vite.svg',
+            src: 'logo.svg',
             sizes: '512x512',
             type: 'image/svg+xml'
           }
