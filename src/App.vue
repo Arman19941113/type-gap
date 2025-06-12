@@ -18,8 +18,8 @@ const processedText = computed(() => {
     .replace(/([\u4e00-\u9fa5])([a-zA-Z0-9])/g, '$1 $2')
     // 英文/数字后跟中文，添加空格
     .replace(/([a-zA-Z0-9])([\u4e00-\u9fa5])/g, '$1 $2')
-    // 清理多余的空格
-    .replace(/\s+/g, ' ')
+    // 清理多余的空格，但保留换行符
+    .replace(/[ \t]+/g, ' ')
     .trim()
 })
 
