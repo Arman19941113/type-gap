@@ -36,6 +36,9 @@ importers:
       vue-tsc:
         specifier: ^2.2.8
         version: 2.2.10(typescript@5.8.3)
+      workbox-window:
+        specifier: ^7.3.0
+        version: 7.3.0
 
 packages:
 
@@ -3793,7 +3796,7 @@ snapshots:
 
   has-tostringtag@1.0.0:
     dependencies:
-      has-symbols: 1.1.0
+      has-symbols: 1.0.2
 
   has-tostringtag@1.0.2:
     dependencies:
@@ -3870,7 +3873,7 @@ snapshots:
 
   is-generator-function@1.0.10:
     dependencies:
-      has-tostringtag: 1.0.2
+      has-tostringtag: 1.0.0
 
   is-map@2.0.3: {}
 
@@ -3909,7 +3912,7 @@ snapshots:
 
   is-symbol@1.0.4:
     dependencies:
-      has-symbols: 1.1.0
+      has-symbols: 1.0.2
 
   is-symbol@1.1.1:
     dependencies:
